@@ -17,7 +17,7 @@
     <body>
 	<div id="table-body">
 	    <h2>My ADS</h2>
-	    <a href="">Add Ads</a>
+	    <a href="/add-ads.php">Add Ads</a>
 	    <table>
 		<thead>
 		    <td>Photo</td>
