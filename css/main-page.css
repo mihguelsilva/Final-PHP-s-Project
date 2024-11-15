@@ -1,0 +1,121 @@
+@charset "utf-8";
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: Arial;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+body {
+    background-color: rgba(0,0,0,.08);
+}
+div.page-width {
+    position: relative;
+    width: 85%;
+    margin: auto;
+}
+header {
+    height: 320px;
+    background: url("/site-images/cover.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 50%;
+    background-color: rgb(25,214,210);
+}
+header h1 {
+    font-size: 50pt;
+    padding-top: 50px;
+}
+header h2 {
+    font-size: 25pt;
+    color: rgba(0,0,0,.7);
+}
+figure {
+    width: 100px;
+    padding: 10px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+figure a img {
+    background-color: rgba(255,255,255,.5);
+    border-radius: 50%;
+}
+figcaption {
+    text-align: center;
+}
+figure:hover figcaption {
+    text-decoration: underline;
+}
+nav#menu {
+    height: 60px;
+    background-color: black;
+}
+div#sites-name {
+    width: 50%;
+    float: left;
+    height: 60px;
+}
+div#sites-name a h2 {
+    color: white;
+    line-height: 60px;
+}
+div#links {
+    width: 50%;
+    float: right;
+    height: 60px;;
+}
+div#links ul {
+    list-style: none;
+    float: right;
+}
+div#links ul li {
+    float: left;
+    padding: 10px;
+    line-height: 40px;
+    cursor: pointer;
+}
+div#links ul li a {
+    color: white;
+    display: block;
+    font-size: 14pt;
+}
+div#links ul li a:hover {
+    text-decoration: underline;
+}
+section {
+    background-color: red;
+}
+div.box {
+    background-color: white;
+    width: 200px;
+    margin: 10px;
+    float: left;
+    cursor: pointer;
+    box-shadow: 1px 1px 5px rgba(0,0,0,.3);
+}
+div.box img {
+    width: 200px;
+    height: 200px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+div.box:hover {
+    box-shadow: 2px 2px 20px rgba(0,0,0,.3);
+}
+div hgroup {
+    padding: 8px;
+}
+hgroup h3 {
+    font-size: 20pt;
+    color: rgba(70,130,100);
+}
+hgroup h5 {
+    font-size: 13pt;
+    color: rgba(80,80,80);
+}
+hgroup h4 {
+    font-size: 17pt;
+}
