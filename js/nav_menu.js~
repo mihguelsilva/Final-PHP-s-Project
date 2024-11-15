@@ -1,0 +1,5 @@
+document.addEventListener('DOMContentLoaded', function() {
+    let navMenu = document.createElement('nav');
+    navMenu.setAttribute('id', 'menu');
+    document.body.insertBefore(navMenu, document.body.firstElementChild);
+});

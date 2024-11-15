@@ -1,0 +1,29 @@
+@charset 'utf-8';
+* {
+    margin: 0px;
+    padding: 0px;
+}
+div#
+div#table-body {
+    width: 1000px;
+    height: 500px;
+    margin: auto;
+}
+div#table-body h2 {
+    margin-bottom: 15px;
+    padding: 15px 0px;
+    font-size: 25pt;
+}
+div#table-body a {
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+    display: inline-block;
+}
+div#table-body table {
+    width: 1000px;
+}
+div#table-body table thead {
+    font-weight: bold;
+}
