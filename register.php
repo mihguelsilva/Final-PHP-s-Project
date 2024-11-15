@@ -19,15 +19,15 @@
 	    <form method="POST">
 		<h2>Register New User</h2>
 		<label for="name">Name</label>
-		<input type="text" name="name" autocomplete="off" id="name">
+		<input type="text" name="name" autocomplete="off" id="name" maxlength="50">
 		<label for="phone">Phone</label>
-		<input type="text" name="phone" autocomplete="off" id="phone">
+		<input type="text" name="phone" autocomplete="off" id="phone" maxlength="30">
 		<label for="email">Email</label>
-		<input type="email" name="email" autocomplete="off" id="email">
+		<input type="email" name="email" autocomplete="off" id="email" maxlength="40">
 		<label for="password">Password</label>
-		<input type="password" name="password" autocomplete="off" id="password">
+		<input type="password" name="password" autocomplete="off" id="password" maxlength="20">
 		<label for="confirm-password">Confirm Password</label>
-		<input type="password" name="confirm-password" autocomplete="off" id="confirm-password">
+		<input type="password" name="confirm-password" autocomplete="off" id="confirm-password" maxlength="20">
 		<input type="submit" name="register" value="Register" id="button">
 	    </form>
 	</section>

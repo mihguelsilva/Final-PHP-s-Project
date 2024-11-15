@@ -18,9 +18,9 @@
 	<form method="POST" enctype="multipart/form-data">
 	    <h1>Add ADS</h2>
 		<label for="title">Title</label>
-		<input type="text" id="title" name="title" autocomplete="off">
+		<input type="text" id="title" name="title" autocomplete="off" maxlength="15">
 		<label for="description">Description</label>
-		<textarea id="description" name="description"></textarea>
+		<textarea id="description" name="description" maxlength="2000"></textarea>
 		<label for="value">Value</label>
 		<input type="text" id="value" name="value" placeholder="00,00">
 		<label for="category">Category</label>
