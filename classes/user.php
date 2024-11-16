@@ -2,8 +2,9 @@
 class User {
     public function register ($name, $phone, $email, $password) {
         global $pdo;
-        $sql = $pdo->prepare('SELECT id_user FROM user_register WHERE email = :email');
+        $sql = $pdo->prepare('SELECT id_user FROM user_register WHERE email LIKE :email');
         $sql->bindValue(':email', $email);
+        $sql->execute();
         if ($sql->rowCount() > 0) {
             return false;
         } else {
@@ -14,8 +15,6 @@ class User {
             $sql->bindValue(":email", $email);
             $sql->bindValue(":password", $password);
             $sql->execute();
-            echo "<script>window.alert('New user registered succesfully!');</script>";
-            header("location: /login.php");
             return true;
         }
     }

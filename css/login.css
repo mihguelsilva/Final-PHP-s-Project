@@ -106,3 +106,19 @@ form label {
     border-radius: 5px;
     color: white;
 }
+div.msg-error, div.msg-success{
+    width: 700px;
+    height: 40px;
+    margin: 30px auto;
+    padding: 10px 0px 10px 30px;
+    font-weight: normal;
+    font-size: 12pt;
+    border-radius: 50px;
+    box-shadow: 1px 1px 10px white;
+}
+div.msg-error {
+    background-color: red;
+}
+div.msg-success {
+    background-color: green;
+}

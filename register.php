@@ -15,11 +15,59 @@
 	<script src='/js/nav_menu.js'></script>
     </head>
     <body>
+
+	<?php
+	require_once 'connect.php';
+	require_once 'classes/user.php';
+	$user = new User();
+	if (isset($_POST['name'])) {
+	    $name = addslashes($_POST['name']);
+	    $phone = addslashes($_POST['phone']);
+	    $email = addslashes($_POST['email']);
+	    $password = addslashes($_POST['password']);
+	    $confirmPassword = addslashes($_POST['confirm-password']);
+	    if(!empty($name) && !empty($phone) && !empty($email) && !empty($password) && !empty($confirmPassword)) {
+		if ($password == $confirmPassword) {
+		    if ($user->register($name, $phone, $email, $password)) {
+	?>
+	    <div class="msg-success">
+		<h4>User registered!</h4>
+		<strong>User was successfully registered!</strong>
+	    </div>
+	    
+	<?php
+	    
+		    } else {
+	?>
+	    <div class="msg-error">
+		<h4>User exists!</h4>
+		<strong>User's already registered!</strong>
+	    </div>
+	<?php
+		    }
+		} else {
+	?>
+	    <div class="msg-error">
+		<h4>Password mismatch!</h4>
+		<strong>Password and Confirm Password mismatch!</strong>
+	    </div>
+	<?php
+		}
+	    } else {
+	    ?>
+	    <div class="msg-error">
+		<h4>You must fill in all the fields!</h4>
+		<strong>Fill all the fields</strong>
+	    </div>
+	<?php
+	}
+	}
+	?>
 	<section id="form">
 	    <form method="POST">
 		<h2>Register New User</h2>
 		<label for="name">Name</label>
-		<input type="text" name="name" autocomplete="off" id="name" maxlength="50">
+		<input type="text" name="name" autocomplete="off" id="name" maxlength="30">
 		<label for="phone">Phone</label>
 		<input type="text" name="phone" autocomplete="off" id="phone" maxlength="30">
 		<label for="email">Email</label>
