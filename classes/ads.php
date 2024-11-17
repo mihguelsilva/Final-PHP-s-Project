@@ -26,6 +26,20 @@ class Ads {
             }
         }
     }
+    public function catchAds() {
+        global $pdo;
+        $sql = $pdo->prepare('SELECT *,
+(SELECT images.url FROM images WHERE images.fk_id_announcements = announcements.id_announcements LIMIT 1) AS url,
+(SELECT category.name FROM category WHERE category.id_category = announcements.fk_id_category) AS category_name
+ FROM announcements WHERE fk_id_user = :id_user');
+        $sql->bindValue(':id_user', $_SESSION['login']);
+        $sql->execute();
+        $data = array();
+        if ($sql->rowCount() > 0) {
+            $data = $sql->fetchAll();
+        }
+        return $data;
+    }
     /*
     public function removeAds() {
     }

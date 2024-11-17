@@ -22,19 +22,24 @@ session_start();
 		<h1>Advertise Here</h1>
 		<h2>Quick and easy sell.</h2>
 		<figure>
-			<img src="/site-images/perfil.png" alt="image's user perfil" width="100%">
-			<?php
-			if (isset($_SESSION['login'])) {
-			    echo "<a href='/logout.php'>";
-			    echo '<figcaption>Sign out</figcaption>';
-			    echo "</a>";
-			} else {
-			    echo "<a href='/login.php'>";
-			    echo '<figcaption>Sign in</figcaption>';
-			    echo "</a>";
-			}
-			?>
-		    </a>
+		    
+		    <?php
+		    if (isset($_SESSION['login'])) {
+			echo "<a href='/logout.php'>";
+			echo "<figure>";
+			echo '<img src="/site-images/perfil.png" alt="images user perfil" width="100%">';
+			echo '<figcaption>Sign out</figcaption>';
+			echo "</figure>";
+			echo "</a>";
+		    } else {
+			echo "<a href='/login.php'>";
+			echo "<figure>";
+			echo '<img src="/site-images/perfil.png" alt="images user perfil" width="100%">';
+			echo '<figcaption>Sign in</figcaption>';
+			echo "</figure>";
+			echo "</a>";
+		    }
+		    ?>
 		</figure>
 	    </div>
 	</header>

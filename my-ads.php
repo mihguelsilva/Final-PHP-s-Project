@@ -1,9 +1,12 @@
 <?php
-session_start();
-if (!isset($_SESSION['login'])) {
+require_once 'connect.php';
+require_once 'classes/ads.php';
+if (empty($_SESSION['login'])) {
     header('location: /login.php');
     exit();
 }
+$ads = new Ads();
+$data = $ads->catchAds();
 ?>
 <!DOCTYPE html>
 <html lang='pt-br'>
@@ -34,18 +37,26 @@ if (!isset($_SESSION['login'])) {
 		    <td>Category</td>
 		    <td>Action</td>
 		</thead>
-		<tr>
-		    <td><img src="/site-images/refrigerator.jpeg" height="80"></td>
-		    <td>Refrigerator</td>
-		    <td>$800,00</td>
-		    <td>New</td>
-		    <td>House</td>
-		    <td>
+		<?php
+		foreach($data as $d) {
+		    echo "<tr>";
+		    if ($d['url']) {
+			echo '<td><img src="ads-images' . DIRECTORY_SEPARATOR . $d['url'] . '" height="80" width="90"></td>';
+		    } else {
+			echo '<td><img src="site-images'.DIRECTORY_SEPARATOR .'no-photo.png" height="80" width="90"></td>';
+		    }
+		    echo "<td>" . $d['title'] . "</td>";
+		    echo "<td>R$ " . number_format($d['value'], 2, ",", ".") . "</td>";
+		    echo "<td>" . $d['state'] . "</td>";
+		    echo "<td>" . $d['category_name'] . "</td>";
+		    echo '<td>
 			<a href="/edit.php">Edit</a>
 			<a href="">Remove</a>
-		    </td>
-		</tr>
+		    </td>';
+		    echo "</tr>";
+		}
+		?>
 	    </table>
-	</div>
+	</div>	
     </body>
 </html>
