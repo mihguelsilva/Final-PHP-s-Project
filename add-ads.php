@@ -1,9 +1,3 @@
-<?php
-session_start();
-if (!isset($_SESSION['login'])) {
-    header('location:/login.php');
-}
-?>
 <!DOCTYPE html>
 <html lang='pt-br'>
     <head>
@@ -21,6 +15,39 @@ if (!isset($_SESSION['login'])) {
 	<script src='/js/nav_menu.js'></script>
     </head>
     <body>
+	<?php
+	require_once 'connect.php';
+	require_once 'classes/ads.php';
+	require_once 'classes/category.php';
+	$catchCat = new Category();
+	$ads = new Ads();
+	if (!isset($_SESSION['login'])) {
+	    header('location: /index.php');
+	    exit();
+	}
+	if (isset($_FILES['photos']) && !empty($_FILES['photos'])) {
+	    $photos = $_FILES['photos'];
+	} else {
+	    $photos = array();
+	}
+	if (isset($_POST['title'])) {
+	    $title = addslashes($_POST['title']);
+	    $description = addslashes($_POST['description']);
+	    $value = addslashes($_POST['value']);
+	    $category = addslashes($_POST['category']);
+	    $state = addslashes($_POST['state']);
+	    if (!empty($title) &&
+		!empty($description) &&
+		!empty($value) &&
+		!empty($category) &&
+		!empty($state)) {
+		$ads->addAds($title, $description, $value, $category, $state, $photos);
+		header('location: /my-ads.php');
+	    } else {
+		echo "<script>window.alert('You must fill in all fields!');</script>";
+	    }
+	}
+	?>
 	<form method="POST" enctype="multipart/form-data">
 	    <h1>Add ADS</h2>
 		<label for="title">Title</label>
@@ -31,12 +58,14 @@ if (!isset($_SESSION['login'])) {
 		<input type="text" id="value" name="value" placeholder="00,00">
 		<label for="category">Category</label>
 		<select id="category" name="category">
-		    <option value="category-1">Category 1</option>
-		    <option value="category-2">Category 2</option>
-		    <option value="category-3">Category 3</option>
-		    <option value="category-4">Category 4</option>
-		    <option value="category-5">Category 5</option>
-		    <option value="category-6">Category 6</option>
+		    <?php
+		    $data = $catchCat->catchCategory();
+		    if (count($data) > 0) {
+			foreach($data as $d) {
+			    echo "<option value='" . $d['id_category'] . "'>" . $d['name'] . "</option>";
+			}
+		    }
+		    ?>
 		</select>
 		<label for="state">State</label>
 		<select id="state" name="state">
@@ -48,11 +77,11 @@ if (!isset($_SESSION['login'])) {
 		<input type="file" id="photos" name="photos[]" multiple>
 		<input type="submit" name="add" value="Add">
 		<!-- <div id="box-photos">
-		    <header>
-			ADS's Photos
-			<img src="/site-images/no-photo.png" width="170px">
-		    </header>
-		</div>-->
+		     <header>
+		     ADS's Photos
+		     <img src="/site-images/no-photo.png" width="170px">
+		     </header>
+		     </div>-->
 	</form>
     </body>
 </html>
