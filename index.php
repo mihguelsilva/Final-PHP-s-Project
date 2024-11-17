@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang='pt-br'>
     <head>
@@ -19,9 +22,18 @@
 		<h1>Advertise Here</h1>
 		<h2>Quick and easy sell.</h2>
 		<figure>
-		    <a href="/login.php">
 			<img src="/site-images/perfil.png" alt="image's user perfil" width="100%">
-			<figcaption>Sign in</figcaption>
+			<?php
+			if (isset($_SESSION['login'])) {
+			    echo "<a href='/logout.php'>";
+			    echo '<figcaption>Sign out</figcaption>';
+			    echo "</a>";
+			} else {
+			    echo "<a href='/login.php'>";
+			    echo '<figcaption>Sign in</figcaption>';
+			    echo "</a>";
+			}
+			?>
 		    </a>
 		</figure>
 	    </div>
@@ -33,7 +45,13 @@
 		</div>
 		<div id="links">
 		    <ul>
-			<li><a href="">Advertise</a></li>
+			<?php
+			if (isset($_SESSION['login'])) {
+			    echo '<li><a href="/my-ads.php">My ADS</a></li>';
+			} else {
+			    echo '<li><a href="/login.php">Advertise</a> </li>';
+			}
+			?>
 			<li><a href="">Contact</a></li>
 			<li><a href="">About us</a></li>
 		    </ul>

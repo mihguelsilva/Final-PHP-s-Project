@@ -19,6 +19,7 @@ class User {
         }
     }
     public function signin($email, $password) {
+        global $pdo;
         $sql = $pdo->prepare('SELECT id_user FROM user_register WHERE email = :email AND password = :password');
         $sql->bindValue(":email", $email);
         $sql->bindValue(":password", $password);
@@ -26,6 +27,9 @@ class User {
         if ($sql->rowCount() > 0) {
             $data = $sql->fetch();
             $_SESSION['login'] = $data['id_user'];
+            return true;
+        } else {
+            return false;
         }
     }
 }

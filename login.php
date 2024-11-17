@@ -15,6 +15,27 @@
 	<script src='/js/nav_menu.js'></script>
     </head>
     <body>
+
+	<?php
+	require_once 'connect.php';
+	require_once 'classes/user.php';
+	$user = new User();
+	if (isset($_POST['email']) && isset($_POST['password'])) {
+	    $email = addslashes($_POST['email']);
+	    $password = addslashes($_POST['password']);
+	    if (!empty($email) && !empty($password)) {
+		$password = md5($password);
+		if ($user->signin($email, $password)) {
+		    header('location: /index.php');
+		} else {
+		    echo "<script>window.alert('Incorrect credentials!');</script>";
+		}
+	    } else {
+		echo "<script>window.alert('Incorrect credentials!');</script>";
+	    }
+	}
+	?>
+	
 	<section id="form">
 	    <form method="POST">
 		<h2>Sign In</h2>
