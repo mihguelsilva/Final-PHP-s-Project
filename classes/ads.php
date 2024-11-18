@@ -16,7 +16,7 @@ class Ads {
             for($i = 0; $i < count($photos['tmp_name']); $i++) {
                 $type = $photos['type'][$i];
                 if (in_array($type, array('image/jpeg', 'image/png'))) {
-                    $fileName = md5(time() . ".jpg");
+                    $fileName = md5(rand(0,99999).time().".jpg");
                     move_uploaded_file($photos['tmp_name'][$i], 'ads-images' . DIRECTORY_SEPARATOR . $fileName);
                     $sql = $pdo->prepare('INSERT INTO images (url, fk_id_announcements) values (:u, :id_an)');
                     $sql->bindValue(':u', $fileName);
@@ -26,6 +26,7 @@ class Ads {
             }
         }
     }
+    
     public function catchAds() {
         global $pdo;
         $sql = $pdo->prepare('SELECT *,
@@ -40,9 +41,26 @@ class Ads {
         }
         return $data;
     }
-    /*
-    public function removeAds() {
+    
+    public function removeAds($id) {
+        global $pdo;
+        $sql = $pdo->prepare('SELECT url FROM images WHERE fk_id_announcements = :id_images');
+        $sql->bindValue(':id_images', $id);
+        $sql->execute();
+        if($sql->rowCount() > 0) {
+            $urls = $sql->fetchAll();
+            foreach($urls as $url) {
+                unlink('ads-images'.DIRECTORY_SEPARATOR.$url['url']);
+            }
+            $sql = $pdo->prepare('DELETE FROM images WHERE fk_id_announcements = :id_images');
+            $sql->bindValue(':id_images', $id);
+            $sql->execute();
+        }
+        $sql = $pdo->prepare('DELETE FROM announcements WHERE id_announcements = :id_an');
+        $sql->bindValue('id_an', $id);
+        $sql->execute();
     }
+    /*
     public function editAds() {
     }
     */

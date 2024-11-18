@@ -50,13 +50,24 @@ $data = $ads->catchAds();
 		    echo "<td>" . $d['state'] . "</td>";
 		    echo "<td>" . $d['category_name'] . "</td>";
 		    echo '<td>
-			<a href="/edit.php">Edit</a>
-			<a href="">Remove</a>
-		    </td>';
-		    echo "</tr>";
-		}
+		    <a href="/edit.php">Edit</a>';
 		?>
+		<a href="/my-ads.php?id=<?php echo $d['id_announcements']?>">Remove</a>
+
+		    </td>
+		    <?php
+		    echo "</tr>";
+		    }
+		    ?>
 	    </table>
-	</div>	
+	</div>
     </body>
 </html>
+
+<?php
+if (isset($_GET['id']) && !empty($_GET['id'])) {
+    $id = addslashes($_GET['id']);
+    $ads->removeAds($id);
+    header('location: /my-ads.php');
+}
+?>
