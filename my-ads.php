@@ -49,10 +49,10 @@ $data = $ads->catchAds();
 		    echo "<td>R$ " . number_format($d['value'], 2, ",", ".") . "</td>";
 		    echo "<td>" . $d['state'] . "</td>";
 		    echo "<td>" . $d['category_name'] . "</td>";
-		    echo '<td>
-		    <a href="/edit.php">Edit</a>';
-		?>
-		<a href="/my-ads.php?id=<?php echo $d['id_announcements']?>">Remove</a>
+		    echo '<td>';
+		    ?>
+		<a href="/edit.php?id=<?php echo $d['id_announcements'];?>">Edit</a>';
+		<a href="/my-ads.php?id=<?php echo $d['id_announcements'];?>">Remove</a>
 
 		    </td>
 		    <?php

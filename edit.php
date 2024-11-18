@@ -1,8 +1,14 @@
 <?php
-session_start();
-if (!isset($_SESSION['login'])) {
+require_once 'connect.php';
+require_once 'classes/ads.php';
+if (empty($_SESSION['login'])) {
     header('location: /login.php');
     exit();
+}
+$ads = new Ads();
+if (isset($_GET['id']) && !empty($_GET['id'])) {
+    $id = addslashes($_GET['id']);
+    $data = $ads->editAds($id);
 }
 ?>
 <!DOCTYPE html>
@@ -25,25 +31,38 @@ if (!isset($_SESSION['login'])) {
 	<form method="POST" enctype="multipart/form-data">
 	    <h1>Edit ADS</h2>
 		<label for="title">Title</label>
-		<input type="text" id="title" name="title" autocomplete="off">
+		<input type="text" id="title" name="title" autocomplete="off" value="<?php echo $data['title']; ?>">
 		<label for="description">Description</label>
-		<textarea id="description" name="description"></textarea>
+		<textarea id="description" name="description"><?php echo $data['description'];?></textarea>
 		<label for="value">Value</label>
-		<input type="text" id="value" name="value" placeholder="00,00">
+		<input type="text" id="value" name="value" placeholder="00,00" value="<?php echo "R$ ".number_format($data['value'], 2); ?>">
 		<label for="category">Category</label>
 		<select id="category" name="category">
-		    <option value="category-1">Category 1</option>
-		    <option value="category-2">Category 2</option>
-		    <option value="category-3">Category 3</option>
-		    <option value="category-4">Category 4</option>
-		    <option value="category-5">Category 5</option>
-		    <option value="category-6">Category 6</option>
+		    <?php
+		    require_once 'classes/category.php';
+		    $category = new Category();
+		    $cat = $category->catchCategory();
+		    foreach($cat as $categ) {
+			if ($categ['id_category'] == $data['fk_id_category']) {
+			    echo "<option value='".$categ['id_category']."' selected='selected'>".$categ['name']."</option>";
+			} else {
+			    echo "<option value='".$categ['id_category']."'>".$categ['name']."</option>";
+			}
+		    }
+		    ?>
 		</select>
 		<label for="state">State</label>
 		<select id="state" name="state">
-		    <option value="new">New</option>
-		    <option value="used">Used</option>
-		    <option value="pre-owned">Pre-Owned</option>
+		    <?php
+		    $stateValue = array('new', 'used', 'pre-owned');
+		    foreach($stateValue as $state) {
+			if ($state == $data['state']) {
+			    echo "<option value='".$state."' selected='selected'>".ucfirst($state)."</option>";
+			} else {
+			    echo "<option value='".$state."'>".ucfirst($state)."</option>";
+			}
+		    }
+		    ?>
 		</select>
 		<label for="photos">Photos</label>
 		<input type="file" id="photos" name="photos[]" multiple>
@@ -52,19 +71,42 @@ if (!isset($_SESSION['login'])) {
 		    <header>
 			ADS's Photos
 		    </header>
-		    <figure class="content">
-			<img src="/site-images/no-photo.png" width="100px">
-			<figcaption><a href="">Delete</a></figcaption>
-		    </figure>
-		    <figure class="content">
-			<img src="/site-images/no-photo.png" width="100px">
-			<figcaption><a href="">Delete</a></figcaption>
-		    </figure>
-		    <figure class="content">
-			<img src="/site-images/no-photo.png" width="100px">
-			<figcaption><a href="">Delete</a></figcaption>
-		    </figure>
+		    <!--
+			 <figure class="content">
+			 <img src="/site-images/no-photo.png" width="100px">
+			 <figcaption><a href="">Delete</a></figcaption>
+			 </figure>
+			 <figure class="content">
+			 <img src="/site-images/no-photo.png" width="100px">
+			 <figcaption><a href="">Delete</a></figcaption>
+			 </figure>
+			 <figure class="content">
+			 <img src="/site-images/no-photo.png" width="100px">
+			 <figcaption><a href="">Delete</a></figcaption>
+			 </figure>-->
+		    <?php
+		    if (isset($data['photos'])) {
+			foreach($data['photos'] as $photo) {
+		    ?>
+			<figure class="content">
+			    <img src="ads-images<?php echo DIRECTORY_SEPARATOR.$photo['url'];
+						?>" width="100px" height="100px">
+			    <figcaption><a href="/edit.php?id=<?php echo $data['id_announcements']?>
+						 &idm=<?php echo $photo['id_image'] ?>">Delete</a></figcaption>
+			</figure>
+		    <?php
+		    }
+		    }
+		    ?>
 		</div>
 	</form>
     </body>
 </html>
+<?php
+if (isset($_GET['idm']) && !empty($_GET['idm']) && isset($_GET['id']) && !empty($_GET['id'])) {
+    $idm = addslashes($_GET['idm']);
+    $id = addslashes($_GET['id']);
+    $ads->deletePhoto($idm);
+    echo "<script>window.location.href='/edit.php?id=".$_GET['id']."';</script>";
+}
+?>

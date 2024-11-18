@@ -60,9 +60,39 @@ class Ads {
         $sql->bindValue('id_an', $id);
         $sql->execute();
     }
-    /*
-    public function editAds() {
+
+    public function editAds($id) {
+        global $pdo;
+        $data = array();
+        $data['photos'] = array();
+        $sql = $pdo->prepare('SELECT * FROM announcements WHERE id_announcements = :id_an');
+        $sql->bindValue(':id_an', $id);
+        $sql->execute();
+        if ($sql->rowCount() > 0) {
+            $data =  $sql->fetch();
+            $sql = $pdo->prepare('SELECT id_image, url FROM images WHERE fk_id_announcements = :id_images');
+            $sql->bindValue(':id_images', $id);
+            $sql->execute();
+            if($sql->rowCount() > 0) {
+                $data['photos'] = $sql->fetchAll();
+            }
+        }
+        return $data;
     }
-    */
+
+    public function deletePhoto($id) {
+        global $pdo;
+        $sql = $pdo->prepare('SELECT url FROM images WHERE id_image = :id_image');
+        $sql->bindValue('id_image', $id);
+        $sql->execute();
+        if ($sql->rowCount()) {
+            $url = $sql->fetch();
+            unlink('ads-images' . DIRECTORY_SEPARATOR . $url['url']);
+        }
+        $sql = $pdo->prepare('DELETE FROM images WHERE id_image = :id_image');
+        $sql->bindValue(':id_image', $id);
+        $sql->execute();
+    }
+
 }
 ?>
