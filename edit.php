@@ -28,6 +28,26 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 	<script src='/js/nav_menu.js'></script>
     </head>
     <body>
+	<?php
+	if (isset($_POST['title']) && isset($_GET['id'])) {
+	    $title = addslashes($_POST['title']);
+	    $desc = addslashes($_POST['description']);
+	    $vlw = addslashes($_POST['value']);
+	    $ctg = addslashes($_POST['category']);
+	    $stt = addslashes($_POST['state']);
+	    if (isset($_FILES['photos'])) {
+		$phts = $_FILES['photos'];
+	    } else {
+		$phts = array();
+	    }
+	    if (!empty($title) && !empty($desc) && !empty($vlw) && !empty($ctg) && !empty($stt)) {
+		$ads->updateAds($id, $title, $desc, $vlw, $ctg, $stt, $phts);
+		header('location: /my-ads.php');
+	    } else {
+		echo "<script>window.alert('Fill in all fields!');</script>";
+	    }
+	}
+	?>
 	<form method="POST" enctype="multipart/form-data">
 	    <h1>Edit ADS</h2>
 		<label for="title">Title</label>
@@ -35,7 +55,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 		<label for="description">Description</label>
 		<textarea id="description" name="description"><?php echo $data['description'];?></textarea>
 		<label for="value">Value</label>
-		<input type="text" id="value" name="value" placeholder="00,00" value="<?php echo "R$ ".number_format($data['value'], 2); ?>">
+		<input type="text" id="value" name="value" placeholder="00,00" value="<?php echo number_format($data['value'], 2); ?>">
 		<label for="category">Category</label>
 		<select id="category" name="category">
 		    <?php
@@ -71,19 +91,6 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 		    <header>
 			ADS's Photos
 		    </header>
-		    <!--
-			 <figure class="content">
-			 <img src="/site-images/no-photo.png" width="100px">
-			 <figcaption><a href="">Delete</a></figcaption>
-			 </figure>
-			 <figure class="content">
-			 <img src="/site-images/no-photo.png" width="100px">
-			 <figcaption><a href="">Delete</a></figcaption>
-			 </figure>
-			 <figure class="content">
-			 <img src="/site-images/no-photo.png" width="100px">
-			 <figcaption><a href="">Delete</a></figcaption>
-			 </figure>-->
 		    <?php
 		    if (isset($data['photos'])) {
 			foreach($data['photos'] as $photo) {

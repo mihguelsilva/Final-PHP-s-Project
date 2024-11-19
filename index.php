@@ -1,5 +1,11 @@
 <?php
-session_start();
+require_once 'connect.php';
+require_once 'classes/ads.php';
+require_once 'classes/category.php';
+$ads = new Ads();
+$data = $ads->catchProduct();
+$category = new Category();
+$cat = $category->catchCategory();
 ?>
 <!DOCTYPE html>
 <html lang='pt-br'>
@@ -22,7 +28,7 @@ session_start();
 		<h1>Advertise Here</h1>
 		<h2>Quick and easy sell.</h2>
 		<figure>
-		    
+
 		    <?php
 		    if (isset($_SESSION['login'])) {
 			echo "<a href='/logout.php'>";
@@ -65,16 +71,38 @@ session_start();
 	</nav>
 	<section>
 	    <div class="page-width">
-		<div class="box">
-		    <img src="">
-		    <a href="">
-			<hgroup>
-			    <h3>Title</h3>
-			    <h5>Category</h5>
-			    <h4>Value</h4>
-			</hgroup>
-		    </a>
-		</div>
+		<?php
+		foreach($data as $d) {
+		?>
+		    <div class="box">
+			<a href="">
+			<?php
+			if (isset($d['url'])) {
+			?>
+			    <img src="ads-images<?php echo DIRECTORY_SEPARATOR. $d['url'] ?>">
+			<?php
+			} else {
+			?>
+			    <img src="site-images<?php echo DIRECTORY_SEPARATOR ."no-photo.png" ?>">
+			<?php
+			}
+			?>
+			    <hgroup>
+				<h3><?php echo $d['title']; ?></h3>
+				<h5><?php
+				    foreach($cat as $c) {
+					if ($c['id_category'] == $d['fk_id_category']) {
+					    echo $c['name'];
+					}
+				    }
+				    ?></h5>
+				<h4><?php echo "RS " . $d['value']; ?></h4>
+			    </hgroup>
+			</a>
+		    </div>
+		<?php
+		}
+		?>
 	    </div>
 	</section>
     </body>
