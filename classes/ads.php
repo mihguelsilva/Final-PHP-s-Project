@@ -134,5 +134,28 @@ WHERE id_announcements = :id_an');
         }
         return $data;
     }
+
+    public function checkProduct($id) {
+        global $pdo;
+        $data = array();
+        $data['photos'] = array();
+        $sql = $pdo->prepare('SELECT *,
+(SELECT user_register.name FROM user_register WHERE user_register.id_user = announcements.fk_id_user) AS user_name,
+(SELECT user_register.email FROM user_register WHERE user_register.id_user = announcements.fk_id_user) AS user_email,
+(SELECT user_register.phone FROM user_register WHERE user_register.id_user = announcements.fk_id_user) AS user_phone
+ FROM announcements WHERE id_announcements = :id_an');
+        $sql->bindValue(':id_an', $id);
+        $sql->execute();
+        if ($sql->rowCount() > 0) {
+            $data = $sql->fetch();
+            $sql = $pdo->prepare('SELECT * FROM images WHERE fk_id_announcements = :id_an');
+            $sql->bindValue(':id_an', $id);
+            $sql->execute();
+            if ($sql->rowCount() > 0) {
+                $data['photos'] = $sql->fetchAll();
+            }
+        }
+        return $data;
+    }
 }
 ?>

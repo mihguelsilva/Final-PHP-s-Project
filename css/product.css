@@ -1,0 +1,40 @@
+@charset 'utf-8';
+* {
+    margin: 0px;
+    padding: 0px;
+}
+div.page-width-photo {
+    max-width: 800px;
+    height: 150px;
+    margin: 50px auto;
+}
+div.box-photo {
+    width: 150px;
+    float: left;
+}
+div.page-width {
+    padding-bottom: 50px;
+}
+div.page-width h1, div.page-width h3 {
+    border-bottom: 2px solid grey;
+    color: darkblue;
+    margin-top: 20px;
+    font-family: "Audiowide", sans-serif;
+}
+div.page-width h3 {
+    font-size: 20pt;
+}
+div.page-width p {
+    margin-top: 20px;
+    font-family: "Poppins", sans-serif;
+    font-size: 16pt;
+    text-align: justify;
+    line-height: 40px;
+}
+img {
+    transition: 0.5s;
+    cursor: pointer;
+}
+img:hover {
+    transform: scale(1.5);
+}

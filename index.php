@@ -75,7 +75,7 @@ $cat = $category->catchCategory();
 		foreach($data as $d) {
 		?>
 		    <div class="box">
-			<a href="">
+			<a href="/product.php?id=<?php echo $d['id_announcements']; ?>">
 			<?php
 			if (isset($d['url'])) {
 			?>

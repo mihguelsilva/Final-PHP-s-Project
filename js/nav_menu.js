@@ -25,13 +25,15 @@ document.addEventListener('DOMContentLoaded', function() {
     divLinks.setAttribute('style', 'width:50%;float:right;height:60px;');
     let ulLinks = document.createElement('ul');
     ulLinks.setAttribute('style', 'float:right;list-style:none;');
-    let aTitle = ['Advertise', 'Contact', 'About us'];
-    for(let i = 0; i < 3; i++) {
+    let aTitle = ['Advertise', 'Contact', 'About us', 'Logout'];
+    let aHref = ['/my-ads.php', '/contact.php', '/aboutus.php', '/logout.php'];
+    for(let i = 0; i < aTitle.length; i++) {
 	let li = document.createElement('li');
 	li.setAttribute('style', 'float:left;padding:10px;line-height:40px;cursor:pointer;');
 	let a = document.createElement('a');
 	a.setAttribute('class', 'nav-menu');
-	a.setAttribute('style', 'color:white;display:block;font-size:14pt;');
+	a.setAttribute('href', aHref[i]);
+	a.setAttribute('style', 'color:white;display:block;font-size:14pt;text-decoration:none;');
 	a.append(aTitle[i]);
 	li.append(a);
 	ulLinks.append(li);
